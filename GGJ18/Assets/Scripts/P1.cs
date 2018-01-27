@@ -65,6 +65,7 @@ public class P1 : MonoBehaviour {
         if (this.transform.position.y == 2.5)
         {
             newPos = new Vector2(0, (float)0.25 * Screen.height);
+            myText.transform.Rotate(new Vector2(180, 180), Space.World);
         }
         else
         {
