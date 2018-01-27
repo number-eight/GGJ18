@@ -8,6 +8,8 @@ public class World : MonoBehaviour {
 
     public GameObject player1;
     public GameObject player2;
+    public SpriteRenderer health1;
+    public SpriteRenderer health2;
     public bool gameOver;
 
     // Use this for initialization
@@ -38,6 +40,18 @@ public class World : MonoBehaviour {
         player2.transform.localScale = transformVector;
         player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
 
+        SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] sr2 = player2.GetComponentsInChildren<SpriteRenderer>();
+
+        health1 = sr1[1];
+        health2 = sr2[1];
+
+        //GameObject health = new GameObject("Health");
+        //health.transform.SetParent(player1.transform);
+        //SpriteRenderer sr = health.AddComponent<SpriteRenderer>();
+        //sr.sprite = player1.GetComponent<SpriteRenderer>().sprite;
+        //sr.transform.localScale = transformVector;
+        //sr.transform.position = Vector
     }
 
     // Update is called once per frame
@@ -49,7 +63,8 @@ public class World : MonoBehaviour {
                 Vector2 position = Input.mousePosition;
                 Debug.Log(position);
                 ApplyDamage(position);
-            }
+
+        }
     }
 
     // based on the location of the tap, decides which player initiated attack
@@ -60,6 +75,7 @@ public class World : MonoBehaviour {
             // attack player1
             player1.GetComponent<P1>().UpdateDamage(1);
             Debug.Log("player1: " + player1.GetComponent<P1>().damage);
+            decrementHealth(health1, 1);
             if (!player1.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
@@ -75,12 +91,21 @@ public class World : MonoBehaviour {
             // attack player2
             player2.GetComponent<P1>().UpdateDamage(1);
             Debug.Log("player2: " + player2.GetComponent<P1>().damage);
+            decrementHealth(health2, 1);
             if (!player2.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
         }
+    }
+
+    void decrementHealth(SpriteRenderer sr, int value)
+    {
+        sr.transform.localScale += new Vector3(0,-0.01f,0);
+        Debug.Log("whelp");
+        //sr.transform.TransformVector();
+
     }
 
     //void checkPlayers()
