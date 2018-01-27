@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class World : MonoBehaviour {
 
     public GameObject player1;
     public GameObject player2;
+    public GameObject can;
+    Text s;
 
     // Use this for initialization
     void Start () {
@@ -27,6 +30,7 @@ public class World : MonoBehaviour {
         player1.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
         player2.transform.localScale = transformVector;
         player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
+
     }
 
     // Update is called once per frame
@@ -39,7 +43,6 @@ public class World : MonoBehaviour {
                 Vector2 position = Input.mousePosition;
                 Debug.Log(position);
                 ApplyDamage(position);
-                checkPlayers();
             }
     }
 
@@ -50,6 +53,10 @@ public class World : MonoBehaviour {
             // attack player1
             player1.GetComponent<P1>().UpdateDamage(1);
             Debug.Log("player1: " + player1.GetComponent<P1>().damage);
+            if (!player1.GetComponent<P1>().checkIfAlive())
+            {
+                player2.GetComponent<P1>().winGame();
+            }
         }
         else if (position.y == 0.5 * Screen.height)
         {
@@ -60,18 +67,22 @@ public class World : MonoBehaviour {
             // attack player2
             player2.GetComponent<P1>().UpdateDamage(1);
             Debug.Log("player2: " + player2.GetComponent<P1>().damage);
+            if (!player2.GetComponent<P1>().checkIfAlive())
+            {
+                player1.GetComponent<P1>().winGame();
+            }
         }
     }
 
-    void checkPlayers()
-    {
-        if(player2.GetComponent<P1>().isAlive == false)
-        {
-            Destroy(player2);
-        }
-        if (player1.GetComponent<P1>().isAlive == false)
-        {
-            Destroy(player1);
-        }
-    }
+    //void checkPlayers()
+    //{
+    //    if(player2.GetComponent<P1>().isAlive == false)
+    //    {
+    //        Destroy(player2);
+    //    }
+    //    if (player1.GetComponent<P1>().isAlive == false)
+    //    {
+    //        Destroy(player1);
+    //    }
+    //}
 }
