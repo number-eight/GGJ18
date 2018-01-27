@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class P1 : MonoBehaviour {
 
-    public string test = "test";
     public int damage;
-    public int maxDamage = 10;
+    public int maxDamage = 100;
     public bool isAlive = true;
     public bool gameWon = false;
 
@@ -29,7 +28,7 @@ public class P1 : MonoBehaviour {
 
     public bool checkIfAlive()
     {
-        if (damage == maxDamage)
+        if (damage >= maxDamage)
         {
             isAlive = false;
             this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);

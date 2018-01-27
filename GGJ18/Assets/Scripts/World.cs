@@ -12,6 +12,12 @@ public class World : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        // only allow the game to be played in portrait orientation
+        Screen.autorotateToPortrait = true;
+        Screen.autorotateToPortraitUpsideDown = true;
+        Screen.autorotateToLandscapeLeft = false;
+        Screen.autorotateToLandscapeRight = false;
+
         gameOver = false;
         // instantiate the first player
         player1 = GameObject.FindWithTag("Player");
@@ -37,8 +43,7 @@ public class World : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
-        //for testing -in-Unity purposes
+        // tap events on Android is also interpreted as mouse button down events
         if (Input.GetMouseButtonDown(0) && gameOver == false)
             {
                 Vector2 position = Input.mousePosition;
@@ -47,6 +52,7 @@ public class World : MonoBehaviour {
             }
     }
 
+    // based on the location of the tap, decides which player initiated attack
     void ApplyDamage(Vector2 position)
     {
         if (position.y > 0.5*Screen.height)
@@ -62,7 +68,7 @@ public class World : MonoBehaviour {
         }
         else if (position.y == 0.5 * Screen.height)
         {
-            // do nothing
+            // do nothing if attack happened on dividing line between two players
         }
         else
         {
