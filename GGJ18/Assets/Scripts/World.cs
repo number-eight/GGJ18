@@ -24,6 +24,7 @@ public class World : MonoBehaviour {
 
         // instantiate the second player
         player2 = Instantiate(player1, translateVector, Quaternion.identity);
+        player2.transform.Rotate(new Vector2(180, 180), Space.World);
 
         //Transform both players
         player1.transform.localScale = transformVector;
