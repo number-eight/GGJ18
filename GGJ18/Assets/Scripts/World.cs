@@ -89,7 +89,7 @@ public class World : MonoBehaviour {
             // attack player2
             player2.GetComponent<P1>().UpdateDamage(1);
             Debug.Log("player2: " + player2.GetComponent<P1>().damage);
-            decrementHealth(health2, 1);
+            decrementHealth(health2, -1);
             if (!player2.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
@@ -108,11 +108,14 @@ public class World : MonoBehaviour {
         // currently translating at the wrong distance
         // float pixelsLost = (float)0.01* Screen.height / 2;
         var diff = before[1] - after[1] / 2;
-        Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, -diff, 0);
+        //Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, -diff, 0);
+        var worldToPixels = ((Screen.height / 2.0f) / Camera.main.orthographicSize);
+        float adjustedDiff = (before[1] - after[1] / 2) / worldToPixels;
+        Debug.Log("adjustedDiff " + adjustedDiff);
+        Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, value * adjustedDiff, 0);
         Debug.Log(fuckthis[1]);
         sr.transform.Translate(fuckthis);
         //sr.transform.TransformVector();
-
     }
 
     //void checkPlayers()
