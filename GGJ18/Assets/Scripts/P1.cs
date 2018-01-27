@@ -23,7 +23,9 @@ public class P1 : MonoBehaviour {
 
     public void UpdateDamage(int increment)
     {
-        damage += increment;
+        if (this.isAlive){
+            damage += increment;
+        }
     }
 
     public bool checkIfAlive()
@@ -61,14 +63,42 @@ public class P1 : MonoBehaviour {
         myText.resizeTextForBestFit = true;
         myText.rectTransform.sizeDelta = new Vector2(100, 50);
         Vector2 newPos;
+        Debug.Log(this.transform.position.x);
+        Debug.Log(this.transform.position.y);
+
         if (this.transform.position.y == 2.5)
         {
-            newPos = new Vector2(0, (float)0.25 * Screen.height);
+
             myText.transform.Rotate(new Vector2(180, 180), Space.World);
+
+            if (this.transform.position.x == 4)
+            {
+
+                newPos = new Vector2((float)0.25*Screen.width, (float)0.25 * Screen.height);
+            }
+            else if (this.transform.position.x == -4)
+            {
+                newPos = new Vector2((float)-0.25 * Screen.width, (float)0.25 * Screen.height);
+            }
+            else
+            {
+                newPos = new Vector2(0, (float)0.25 * Screen.height);
+            }
         }
         else
         {
-            newPos = new Vector2(0, (float)-0.25 * Screen.height);
+            if (this.transform.position.x == 4)
+            {
+                newPos = new Vector2((float)0.25 * Screen.width, (float)-0.25 * Screen.height);
+            }
+            else if (this.transform.position.x == -4)
+            {
+                newPos = new Vector2((float)-0.25 * Screen.width, (float)-0.25 * Screen.height);
+            }
+            else
+            {
+                newPos = new Vector2(0, (float)-0.25 * Screen.height);
+            }
         }
         myText.rectTransform.localPosition = newPos;
     }
