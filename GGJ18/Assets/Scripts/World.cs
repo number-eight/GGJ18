@@ -39,19 +39,17 @@ public class World : MonoBehaviour {
         player1.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
         player2.transform.localScale = transformVector;
         player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
-
+        
+        // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
+        Color c = sr1[1].color;
+        c.a = 0.5f;
+        sr1[1].color = c;
         SpriteRenderer[] sr2 = player2.GetComponentsInChildren<SpriteRenderer>();
+        sr2[1].color = c;
 
         health1 = sr1[1];
         health2 = sr2[1];
-
-        //GameObject health = new GameObject("Health");
-        //health.transform.SetParent(player1.transform);
-        //SpriteRenderer sr = health.AddComponent<SpriteRenderer>();
-        //sr.sprite = player1.GetComponent<SpriteRenderer>().sprite;
-        //sr.transform.localScale = transformVector;
-        //sr.transform.position = Vector
     }
 
     // Update is called once per frame
@@ -102,8 +100,17 @@ public class World : MonoBehaviour {
 
     void decrementHealth(SpriteRenderer sr, int value)
     {
+        Debug.Log("before localscale" + sr.bounds.size);
+        Vector3 before = sr.bounds.size;
         sr.transform.localScale += new Vector3(0,-0.01f,0);
-        Debug.Log("whelp");
+        Vector3 after = sr.bounds.size;
+        Debug.Log("after localscale" + sr.bounds.size);
+        // currently translating at the wrong distance
+        // float pixelsLost = (float)0.01* Screen.height / 2;
+        var diff = before[1] - after[1] / 2;
+        Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, -diff, 0);
+        Debug.Log(fuckthis[1]);
+        sr.transform.Translate(fuckthis);
         //sr.transform.TransformVector();
 
     }
