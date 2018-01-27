@@ -15,21 +15,23 @@ public class World : MonoBehaviour {
 
         float currentRatio = (float)Screen.width / (float)Screen.height;
 
-        Vector2 vec = new Vector2(0, 2.5f);
+        // Declare vectors
+        Vector2 transformVector = new Vector2(currentRatio * 10, 5);
+        Vector2 translateVector = new Vector2(0, 2.5f);
+
         // instantiate the second player
-        player2 = Instantiate(player1, vec, Quaternion.identity);
+        player2 = Instantiate(player1, translateVector, Quaternion.identity);
+
+        //Transform both players
+        player1.transform.localScale = transformVector;
+        player1.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
+        player2.transform.localScale = transformVector;
+        player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetTouch(0).phase == TouchPhase.Ended)
-        //{
-        //    Vector2 position = Input.GetTouch(0).position;
-        //    Debug.Log(position);
-        //    ApplyDamage(position);
-        //    checkPlayers();
-        //}
 
         //for testing -in-Unity purposes
         if (Input.GetMouseButtonDown(0))
