@@ -15,36 +15,31 @@ public class World : MonoBehaviour {
 
         float currentRatio = (float)Screen.width / (float)Screen.height;
 
-        Vector2 vec = new Vector2(0, (float)0.25*(Screen.height/70));
+        Vector2 vec = new Vector2(0, 2.5f);
         // instantiate the second player
         player2 = Instantiate(player1, vec, Quaternion.identity);
-        //Debug.Log(vec2);
-        /*
-        player.GetComponent<P1>().UpdateDamage(10);
-        Debug.Log("player: " + player.GetComponent<P1>().damage);
-        Debug.Log("player2: " + player2.GetComponent<P1>().damage);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Vector2 position = Input.GetTouch(0).position;
-            Debug.Log(position);
-            ApplyDamage(position);
-            checkPlayers();
-        }
+        //if (Input.GetTouch(0).phase == TouchPhase.Ended)
+        //{
+        //    Vector2 position = Input.GetTouch(0).position;
+        //    Debug.Log(position);
+        //    ApplyDamage(position);
+        //    checkPlayers();
+        //}
 
-        // for testing-in-Unity purposes
+        //for testing -in-Unity purposes
         if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 position = Input.mousePosition;
-            Debug.Log(position);
-            ApplyDamage(position);
-            checkPlayers();
-        }
-	}
+            {
+                Vector2 position = Input.mousePosition;
+                Debug.Log(position);
+                ApplyDamage(position);
+                checkPlayers();
+            }
+    }
 
     void ApplyDamage(Vector2 position)
     {
