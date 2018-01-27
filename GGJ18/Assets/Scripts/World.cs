@@ -8,11 +8,11 @@ public class World : MonoBehaviour {
 
     public GameObject player1;
     public GameObject player2;
-    public GameObject can;
-    Text s;
+    public bool gameOver;
 
     // Use this for initialization
     void Start () {
+        gameOver = false;
         // instantiate the first player
         player1 = GameObject.FindWithTag("Player");
 
@@ -38,7 +38,7 @@ public class World : MonoBehaviour {
     {
 
         //for testing -in-Unity purposes
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && gameOver == false)
             {
                 Vector2 position = Input.mousePosition;
                 Debug.Log(position);
@@ -55,6 +55,7 @@ public class World : MonoBehaviour {
             Debug.Log("player1: " + player1.GetComponent<P1>().damage);
             if (!player1.GetComponent<P1>().checkIfAlive())
             {
+                gameOver = true;
                 player2.GetComponent<P1>().winGame();
             }
         }
@@ -69,6 +70,7 @@ public class World : MonoBehaviour {
             Debug.Log("player2: " + player2.GetComponent<P1>().damage);
             if (!player2.GetComponent<P1>().checkIfAlive())
             {
+                gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
         }
