@@ -100,6 +100,7 @@ public class World : MonoBehaviour {
         Vector2 transformVector4P = new Vector2(currentRatio * 5, 5);
         Vector2 translateVectorTopRight = new Vector2(currentRatio * 2.5f, 2.5f);
         Vector2 translateVectorTopLeft = new Vector2(currentRatio * -2.5f, 2.5f);
+        Vector2 translateVectorBottomLeft = new Vector2(currentRatio * -2.5f, 0);
 
         // instantiate the second player
         player2 = Instantiate(player1, translateVectorTopLeft, Quaternion.identity);
@@ -111,6 +112,7 @@ public class World : MonoBehaviour {
 
         //Transform both players
         player1.transform.localScale = transformVector4P;
+        player1.transform.Translate(translateVectorBottomLeft);
         player1.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
         player2.transform.localScale = transformVector4P;
         player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
@@ -205,6 +207,7 @@ public class World : MonoBehaviour {
                     ApplyDamage2P(position);
                     break;
                 case 3:
+                    ApplyDamage3P(position);
                     break;
                 case 4:
                     ApplyDamage4P(position);
@@ -247,6 +250,58 @@ public class World : MonoBehaviour {
         }
     }
 
+    void ApplyDamage3P(Vector2 position)
+    {
+        if (position.y < 0.5 * Screen.height && position.x < 0.5 * Screen.width && player1.GetComponent<P1>().isAlive)
+        {
+            // Player 1 attacking
+            player2.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health2, -1);
+            player3.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health3, -1);
+            //Debug.Log("player2: " + player2.GetComponent<P1>().damage);
+
+            if (!player2.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive())
+            {
+                gameOver = true;
+                player1.GetComponent<P1>().winGame();
+            }
+            //sysm1.Emit(5);
+            Debug.Log("emit from P_m1");
+        }
+
+        else if (position.y > 0.5 * Screen.height && position.x < 0.5 * Screen.width && player2.GetComponent<P1>().isAlive)
+        {
+            // Player 2 attacking
+            player1.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health1, -1);
+            player3.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health3, -1);
+            //Debug.Log("player1: " + player1.GetComponent<P1>().damage);
+            if (!player1.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive())
+            {
+                gameOver = true;
+                player2.GetComponent<P1>().winGame();
+            }
+            //sysm2.Emit(5);
+            Debug.Log("emit from P_m2");
+        }
+        else if (position.y > 0.5 * Screen.height && position.x > 0.5 * Screen.width && player3.GetComponent<P1>().isAlive)
+        {
+            // Player 3 attacking
+            player1.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health1, -1);
+            player2.GetComponent<P1>().UpdateDamage(1);
+            decrementHealth(health2, -1);
+            if (!player1.GetComponent<P1>().checkIfAlive() && !player2.GetComponent<P1>().checkIfAlive())
+            {
+                gameOver = true;
+                player3.GetComponent<P1>().winGame();
+            }
+            //sysm3.Emit(5);
+            Debug.Log("emit from P_m3");
+        }
+    }
     // based on the location of the tap, decides which player initiated attack
     void ApplyDamage4P(Vector2 position)
     {
