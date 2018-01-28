@@ -40,7 +40,7 @@ public class P1 : MonoBehaviour {
         {
             isAlive = false;
             this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
-            createTextBox("Information overload");
+            createTextBox("Too... much... information...");
         }
         return isAlive;
     }
