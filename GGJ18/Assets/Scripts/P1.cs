@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class P1 : MonoBehaviour {
 
     public int damage;
-    public int maxDamage = 100;
+    public int maxDamage = 10;
     public bool isAlive = true;
     public bool gameWon = false;
 
@@ -30,11 +30,11 @@ public class P1 : MonoBehaviour {
 
     public bool checkIfAlive()
     {
-        if (damage >= maxDamage)
+        if (damage >= maxDamage && isAlive)
         {
             isAlive = false;
             this.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
-            createTextBox("You have lost :(");
+            createTextBox("Information overload");
         }
         return isAlive;
     }
@@ -58,25 +58,36 @@ public class P1 : MonoBehaviour {
 
         Text myText = newText.AddComponent<Text>();
         Font font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        Vector2 s = this.GetComponent<SpriteRenderer>().bounds.size;
+        if (s.x > s.y)
+        {
+            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 50), (float)(s.y * 25));
+
+        }
+        else {
+
+            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 50), (float)(s.y * 75));
+        }
+        
+        myText.resizeTextForBestFit = true;
         myText.font = font;
         myText.text = message;
-        myText.resizeTextForBestFit = true;
-        myText.rectTransform.sizeDelta = new Vector2(100, 50);
+        myText.alignment = TextAnchor.MiddleCenter;
+
+
         Vector2 newPos;
-        Debug.Log(this.transform.position.x);
-        Debug.Log(this.transform.position.y);
 
         if (this.transform.position.y == 2.5)
         {
 
             myText.transform.Rotate(new Vector2(180, 180), Space.World);
 
-            if (this.transform.position.x == 4)
+            if (this.transform.position.x > 0)
             {
 
                 newPos = new Vector2((float)0.25*Screen.width, (float)0.25 * Screen.height);
             }
-            else if (this.transform.position.x == -4)
+            else if (this.transform.position.x < 0)
             {
                 newPos = new Vector2((float)-0.25 * Screen.width, (float)0.25 * Screen.height);
             }
@@ -87,11 +98,11 @@ public class P1 : MonoBehaviour {
         }
         else
         {
-            if (this.transform.position.x == 4)
+            if (this.transform.position.x > 0)
             {
                 newPos = new Vector2((float)0.25 * Screen.width, (float)-0.25 * Screen.height);
             }
-            else if (this.transform.position.x == -4)
+            else if (this.transform.position.x < 0)
             {
                 newPos = new Vector2((float)-0.25 * Screen.width, (float)-0.25 * Screen.height);
             }

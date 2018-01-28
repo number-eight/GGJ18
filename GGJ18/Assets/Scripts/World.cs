@@ -156,7 +156,7 @@ public class World : MonoBehaviour {
         player3.transform.localScale = transformVector4P;
         player3.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
         player4.transform.localScale = transformVector4P;
-        player4.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0);
+        player4.GetComponent<SpriteRenderer>().color = new Color(0, 1, 1);
 
         // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
@@ -262,7 +262,6 @@ public class World : MonoBehaviour {
             player4.GetComponent<P1>().UpdateDamage(1);
             decrementHealth(health4, -1);
             //Debug.Log("player1: " + player1.GetComponent<P1>().damage);
-            decrementHealth(health1, 1);
             if (!player1.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive() && !player4.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
