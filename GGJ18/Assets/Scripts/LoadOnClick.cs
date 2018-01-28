@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class LoadOnClick : MonoBehaviour
 {
+    void Start()
+    {
+        // only allow the game to be played in portrait orientation
+        Screen.autorotateToPortrait = true;
+        Screen.autorotateToPortraitUpsideDown = true;
+        Screen.autorotateToLandscapeLeft = false;
+        Screen.autorotateToLandscapeRight = false;
+    }
+
 	public void LoadScene(int level)
     {
         //Application.LoadLevel(level);
