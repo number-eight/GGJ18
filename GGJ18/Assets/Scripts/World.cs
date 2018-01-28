@@ -14,6 +14,9 @@ public class World : MonoBehaviour {
     public SpriteRenderer health2;
     public SpriteRenderer health3;
     public SpriteRenderer health4;
+    public ParticleSystem sys1;
+    public ParticleSystem sys2;
+
     public bool gameOver;
     public int numPlayers;
 
@@ -40,7 +43,6 @@ public class World : MonoBehaviour {
             numPlayers = 2;
             start2P();
         }
-
     }
 
     void start2P()
@@ -74,6 +76,10 @@ public class World : MonoBehaviour {
 
         health1 = sr1[1];
         health2 = sr2[1];
+
+        // Initialize particle systems
+        sys1 = GameObject.FindGameObjectWithTag("Particle1").GetComponent<ParticleSystem>();
+        sys2 = GameObject.FindGameObjectWithTag("Particle2").GetComponent<ParticleSystem>();
     }
 
     void start3P()
@@ -174,7 +180,7 @@ public class World : MonoBehaviour {
         health1 = sr1[1];
         health2 = sr2[1];
         health3 = sr3[1];
-        health4 = sr4[1];
+        health4 = sr4[1];    
     }
 
     // Update is called once per frame
@@ -184,7 +190,7 @@ public class World : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && gameOver == false)
             {
                 Vector2 position = Input.mousePosition;
-                //Debug.Log(position);
+                Debug.Log(position);
             switch (numPlayers)
             {
                 case 2:
@@ -196,8 +202,6 @@ public class World : MonoBehaviour {
                     ApplyDamage4P(position);
                     break;
             }
-               
-
         }
     }
 
@@ -215,6 +219,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
+            sys1.Emit(5);
+            Debug.Log("emit from P1");
         }
 
         else if (position.y > 0.5 * Screen.height && player2.GetComponent<P1>().isAlive)
@@ -228,6 +234,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
             }
+            sys2.Emit(5);
+            Debug.Log("emit from P2");
         }
     }
 
@@ -304,22 +312,8 @@ public class World : MonoBehaviour {
 
     void decrementHealth(SpriteRenderer sr, int value)
     {
-        //Debug.Log("before localscale" + sr.bounds.size);
         Vector3 before = sr.bounds.size;
         sr.transform.localScale += new Vector3(0,-0.01f,0);
-        Vector3 after = sr.bounds.size;
-        //Debug.Log("after localscale" + sr.bounds.size);
-        // currently translating at the wrong distance
-        // float pixelsLost = (float)0.01* Screen.height / 2;
-        var diff = before[1] - after[1] / 2;
-        //Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, -diff, 0);
-        var worldToPixels = ((Screen.height / 2.0f) / Camera.main.orthographicSize);
-        float adjustedDiff = (before[1] - after[1] / 2) / worldToPixels;
-        //Debug.Log("adjustedDiff " + adjustedDiff);
-        Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, value * adjustedDiff, 0);
-        //Debug.Log(fuckthis[1]);
-        sr.transform.Translate(fuckthis);
-        //sr.transform.TransformVector();
     }
 
 }
