@@ -131,6 +131,11 @@ public class World : MonoBehaviour {
         health1 = sr1[1];
         health2 = sr2[1];
         health3 = sr3[1];
+
+        // Initialize particle systems
+        sysm1 = GameObject.FindGameObjectWithTag("Particle_m1").GetComponent<ParticleSystem>();
+        sysm2 = GameObject.FindGameObjectWithTag("Particle_m2").GetComponent<ParticleSystem>();
+        sysm3 = GameObject.FindGameObjectWithTag("Particle_m3").GetComponent<ParticleSystem>();
     }
 
     void start4P()
@@ -266,7 +271,7 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
-            //sysm1.Emit(5);
+            sysm1.Emit(5);
             Debug.Log("emit from P_m1");
         }
 
@@ -283,7 +288,7 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
             }
-            //sysm2.Emit(5);
+            sysm2.Emit(5);
             Debug.Log("emit from P_m2");
         }
         else if (position.y > 0.5 * Screen.height && position.x > 0.5 * Screen.width && player3.GetComponent<P1>().isAlive)
@@ -298,7 +303,7 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
             }
-            //sysm3.Emit(5);
+            sysm3.Emit(5);
             Debug.Log("emit from P_m3");
         }
     }
@@ -381,8 +386,8 @@ public class World : MonoBehaviour {
 
     void decrementHealth(SpriteRenderer sr, int value)
     {
-        float scale = 1 / player4.GetComponent<P1>().maxDamage;
+        float scale = 1 / (float)player1.GetComponent<P1>().maxDamage;
         Vector3 before = sr.bounds.size;
-        sr.transform.localScale += new Vector3(0, -scale, 0);
+        sr.transform.localScale += new Vector3(0, -0.02f, 0);
     }
 }

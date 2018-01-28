@@ -7,14 +7,17 @@ using UnityEngine.UI;
 public class P1 : MonoBehaviour {
 
     public int damage;
-    public int maxDamage = 50;
-    public bool isAlive = true;
-    public bool gameWon = false;
+    public int maxDamage;
+    public bool isAlive;
+    public bool gameWon;
     //public GameObject particleSys;
 
     // Use this for initialization
     void Start () {
         damage = 0;
+        maxDamage = 50;
+        isAlive = true;
+        gameWon = false;
         //Debug.Log("Particle Sys: " + particleSys);
 	}
 	
