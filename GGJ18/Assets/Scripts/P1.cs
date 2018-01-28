@@ -10,10 +10,12 @@ public class P1 : MonoBehaviour {
     public int maxDamage = 100;
     public bool isAlive = true;
     public bool gameWon = false;
+    //public GameObject particleSys;
 
     // Use this for initialization
     void Start () {
         damage = 0;
+        //Debug.Log("Particle Sys: " + particleSys);
 	}
 	
 	// Update is called once per frame

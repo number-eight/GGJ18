@@ -10,6 +10,8 @@ public class World : MonoBehaviour {
     public GameObject player2;
     public SpriteRenderer health1;
     public SpriteRenderer health2;
+    public ParticleSystem sys1;
+    public ParticleSystem sys2;
     public bool gameOver;
 
     // Use this for initialization
@@ -39,7 +41,9 @@ public class World : MonoBehaviour {
         player1.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
         player2.transform.localScale = transformVector;
         player2.GetComponent<SpriteRenderer>().color = new Color(0, 0, 1);
-        
+
+        //player1Particles = (GameObject)Instantiate(Particles, transformVector, false);
+
         // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
         Color c = sr1[1].color;
@@ -50,6 +54,16 @@ public class World : MonoBehaviour {
 
         health1 = sr1[1];
         health2 = sr2[1];
+
+        // Initialize particle systems
+        //ParticleSystem[] sysems = this.GetComponentsInChildren<ParticleSystem>();
+        sys1 = GameObject.FindGameObjectWithTag("Particle1").GetComponent<ParticleSystem>();
+        Debug.Log("sys1 :" + sys1);
+        sys2 = GameObject.FindGameObjectWithTag("Particle2").GetComponent<ParticleSystem>();
+        //Debug.Log("systems: " + systems + "with length" + systems.Length);
+        //sys1 = systems[0];
+        //sys2 = systems[1];
+        //Debug.Log("sys1" + sys1);
     }
 
     // Update is called once per frame
@@ -61,7 +75,6 @@ public class World : MonoBehaviour {
                 Vector2 position = Input.mousePosition;
                 Debug.Log(position);
                 ApplyDamage(position);
-
         }
     }
 
@@ -79,6 +92,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
             }
+            sys2.Emit(5);
+            Debug.Log("emit from P2");
         }
         else if (position.y == 0.5 * Screen.height)
         {
@@ -95,27 +110,27 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
+            sys1.Emit(5);
+            Debug.Log("emit from P1");
         }
     }
 
     void decrementHealth(SpriteRenderer sr, int value)
-    {
+    {/*
         Debug.Log("before localscale" + sr.bounds.size);
-        Vector3 before = sr.bounds.size;
+        Vector3 before = sr.bounds.size;*/
         sr.transform.localScale += new Vector3(0,-0.01f,0);
+        /*
         Vector3 after = sr.bounds.size;
         Debug.Log("after localscale" + sr.bounds.size);
-        // currently translating at the wrong distance
-        // float pixelsLost = (float)0.01* Screen.height / 2;
-        var diff = before[1] - after[1] / 2;
-        //Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, -diff, 0);
+        // various adjustments to address the pixels-to-units conversion issue
         var worldToPixels = ((Screen.height / 2.0f) / Camera.main.orthographicSize);
-        float adjustedDiff = (before[1] - after[1] / 2) / worldToPixels;
+        Debug.Log("worldToPixels: " + worldToPixels);
+        float adjustedDiff = (before[1] - after[1]) / worldToPixels;
         Debug.Log("adjustedDiff " + adjustedDiff);
         Vector3 fuckthis = sr.transform.worldToLocalMatrix * new Vector3(0, value * adjustedDiff, 0);
         Debug.Log(fuckthis[1]);
-        sr.transform.Translate(fuckthis);
-        //sr.transform.TransformVector();
+        sr.transform.Translate(fuckthis);*/
     }
 
     //void checkPlayers()
