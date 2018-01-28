@@ -16,9 +16,14 @@ public class World : MonoBehaviour {
     public SpriteRenderer health4;
     public ParticleSystem sys1;
     public ParticleSystem sys2;
+    public ParticleSystem sysm1;
+    public ParticleSystem sysm2;
+    public ParticleSystem sysm3;
+    public ParticleSystem sysm4;
 
     public bool gameOver;
     public int numPlayers;
+    public Color occlusion;
 
     // Use this for initialization
     void Start () {
@@ -27,6 +32,9 @@ public class World : MonoBehaviour {
         Screen.autorotateToPortraitUpsideDown = true;
         Screen.autorotateToLandscapeLeft = false;
         Screen.autorotateToLandscapeRight = false;
+
+        // the translucent rectangle that serves as the player's health bar
+        occlusion = new Color(1, 1, 1, 0.5f);
 
         gameOver = false;
         if (this.tag == "4P")
@@ -68,11 +76,9 @@ public class World : MonoBehaviour {
 
         // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
-        Color c = sr1[1].color;
-        c.a = 0.5f;
-        sr1[1].color = c;
+        sr1[1].color = occlusion;
         SpriteRenderer[] sr2 = player2.GetComponentsInChildren<SpriteRenderer>();
-        sr2[1].color = c;
+        sr2[1].color = occlusion;
 
         health1 = sr1[1];
         health2 = sr2[1];
@@ -113,13 +119,11 @@ public class World : MonoBehaviour {
 
         // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
-        Color c = sr1[1].color;
-        c.a = 0.5f;
-        sr1[1].color = c;
+        sr1[1].color = occlusion;
         SpriteRenderer[] sr2 = player2.GetComponentsInChildren<SpriteRenderer>();
-        sr2[1].color = c;
+        sr2[1].color = occlusion;
         SpriteRenderer[] sr3 = player3.GetComponentsInChildren<SpriteRenderer>();
-        sr3[1].color = c;
+        sr3[1].color = occlusion;
 
 
         health1 = sr1[1];
@@ -166,21 +170,25 @@ public class World : MonoBehaviour {
 
         // hacking in the health bar visualization with overlaid sprites
         SpriteRenderer[] sr1 = player1.GetComponentsInChildren<SpriteRenderer>();
-        Color c = sr1[1].color;
-        c.a = 0.5f;
-        sr1[1].color = c;
+        sr1[1].color = occlusion;
         SpriteRenderer[] sr2 = player2.GetComponentsInChildren<SpriteRenderer>();
-        sr2[1].color = c;
+        sr2[1].color = occlusion;
         SpriteRenderer[] sr3 = player3.GetComponentsInChildren<SpriteRenderer>();
-        sr3[1].color = c;
+        sr3[1].color = occlusion;
         SpriteRenderer[] sr4 = player4.GetComponentsInChildren<SpriteRenderer>();
-        sr4[1].color = c;
+        sr4[1].color = occlusion;
 
 
         health1 = sr1[1];
         health2 = sr2[1];
         health3 = sr3[1];
-        health4 = sr4[1];    
+        health4 = sr4[1];
+
+        // Initialize particle systems
+        sysm1 = GameObject.FindGameObjectWithTag("Particle_m1").GetComponent<ParticleSystem>();
+        sysm2 = GameObject.FindGameObjectWithTag("Particle_m2").GetComponent<ParticleSystem>();
+        sysm3 = GameObject.FindGameObjectWithTag("Particle_m3").GetComponent<ParticleSystem>();
+        sysm4 = GameObject.FindGameObjectWithTag("Particle_m4").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -258,6 +266,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
+            sysm1.Emit(5);
+            Debug.Log("emit from P_m1");
         }
 
         else if (position.y > 0.5*Screen.height && position.x < 0.5*Screen.width && player2.GetComponent<P1>().isAlive)
@@ -275,6 +285,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
             }
+            sysm2.Emit(5);
+            Debug.Log("emit from P_m2");
         }
         else if (position.y > 0.5 * Screen.height && position.x > 0.5 * Screen.width && player3.GetComponent<P1>().isAlive)
         {
@@ -290,7 +302,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
             }
-
+            sysm3.Emit(5);
+            Debug.Log("emit from P_m3");
         }
         else if (position.y < 0.5 * Screen.height && position.x > 0.5 * Screen.width && player4.GetComponent<P1>().isAlive)
         {
@@ -306,8 +319,9 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player4.GetComponent<P1>().winGame();
             }
+            sysm4.Emit(5);
+            Debug.Log("emit from P_m4");
         }
-
     }
 
     void decrementHealth(SpriteRenderer sr, int value)
@@ -315,5 +329,4 @@ public class World : MonoBehaviour {
         Vector3 before = sr.bounds.size;
         sr.transform.localScale += new Vector3(0,-0.01f,0);
     }
-
 }
