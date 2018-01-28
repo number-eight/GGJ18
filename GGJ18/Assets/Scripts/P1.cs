@@ -28,13 +28,14 @@ public class P1 : MonoBehaviour {
 
     public void UpdateDamage(int increment)
     {
-        if (this.isAlive){
+        if (isAlive){
             damage += increment;
         }
     }
 
     public bool checkIfAlive()
     {
+
         if (damage >= maxDamage && isAlive)
         {
             isAlive = false;

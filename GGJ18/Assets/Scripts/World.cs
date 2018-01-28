@@ -229,7 +229,7 @@ public class World : MonoBehaviour {
             // Player 1 attacking
             player2.GetComponent<P1>().UpdateDamage(1);
             //Debug.Log("player2: " + player2.GetComponent<P1>().damage);
-            decrementHealth(health2, -1);
+            decrementHealth(player2, health2, -1);
             if (!player2.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
@@ -244,7 +244,7 @@ public class World : MonoBehaviour {
             // Player 2 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
             //Debug.Log("player1: " + player1.GetComponent<P1>().damage);
-            decrementHealth(health1, 1);
+            decrementHealth(player1, health1, 1);
             if (!player1.GetComponent<P1>().checkIfAlive())
             {
                 gameOver = true;
@@ -261,12 +261,13 @@ public class World : MonoBehaviour {
         {
             // Player 1 attacking
             player2.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health2, -1);
+            decrementHealth(player2, health2, -1);
             player3.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health3, -1);
+            decrementHealth(player3, health3, -1);
             //Debug.Log("player2: " + player2.GetComponent<P1>().damage);
-
-            if (!player2.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive())
+            bool p2 = player2.GetComponent<P1>().checkIfAlive();
+            bool p3 = player3.GetComponent<P1>().checkIfAlive();
+            if (!p2 && !p3)
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
@@ -279,11 +280,13 @@ public class World : MonoBehaviour {
         {
             // Player 2 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health1, -1);
+            decrementHealth(player1, health1, -1);
             player3.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health3, -1);
+            decrementHealth(player3, health3, -1);
             //Debug.Log("player1: " + player1.GetComponent<P1>().damage);
-            if (!player1.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive())
+            bool p1 = player1.GetComponent<P1>().checkIfAlive();
+            bool p3 = player3.GetComponent<P1>().checkIfAlive();
+            if (!p1 && !p3)
             {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
@@ -295,10 +298,12 @@ public class World : MonoBehaviour {
         {
             // Player 3 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health1, -1);
+            decrementHealth(player1, health1, -1);
             player2.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health2, -1);
-            if (!player1.GetComponent<P1>().checkIfAlive() && !player2.GetComponent<P1>().checkIfAlive())
+            decrementHealth(player2, health2, -1);
+            bool p1 = player1.GetComponent<P1>().checkIfAlive();
+            bool p2 = player2.GetComponent<P1>().checkIfAlive();
+            if (!p1 && !p2)
             {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
@@ -314,14 +319,17 @@ public class World : MonoBehaviour {
         {
             // Player 1 attacking
             player2.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health2, -1);
+            decrementHealth(player2, health2, -1);
             player3.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health3, -1);
+            decrementHealth(player3, health3, -1);
             player4.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health4, -1);
+            decrementHealth(player4, health4, -1);
             //Debug.Log("player2: " + player2.GetComponent<P1>().damage);
 
-            if (!player2.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive() && !player4.GetComponent<P1>().checkIfAlive())
+            bool p2 = player2.GetComponent<P1>().checkIfAlive();
+            bool p3 = player3.GetComponent<P1>().checkIfAlive();
+            bool p4 = player4.GetComponent<P1>().checkIfAlive();
+            if (!p2 && !p3 && !p4)
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
@@ -334,13 +342,16 @@ public class World : MonoBehaviour {
         {
             // Player 2 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health1, -1);
+            decrementHealth(player1, health1, -1);
             player3.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health3, -1);
+            decrementHealth(player3, health3, -1);
             player4.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health4, -1);
+            decrementHealth(player4, health4, -1);
             //Debug.Log("player1: " + player1.GetComponent<P1>().damage);
-            if (!player1.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive() && !player4.GetComponent<P1>().checkIfAlive())
+            bool p1 = player1.GetComponent<P1>().checkIfAlive();
+            bool p3 = player3.GetComponent<P1>().checkIfAlive();
+            bool p4 = player4.GetComponent<P1>().checkIfAlive();
+            if (!p1 && !p3 && !p4)
             {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
@@ -352,12 +363,15 @@ public class World : MonoBehaviour {
         {
             // Player 3 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health1, -1);
+            decrementHealth(player1, health1, -1);
             player2.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health2, -1);
+            decrementHealth(player2, health2, -1);
             player4.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health4, -1);
-            if (!player1.GetComponent<P1>().checkIfAlive() && !player2.GetComponent<P1>().checkIfAlive() && !player4.GetComponent<P1>().checkIfAlive())
+            decrementHealth(player4, health4, -1);
+            bool p1 = player1.GetComponent<P1>().checkIfAlive();
+            bool p2 = player2.GetComponent<P1>().checkIfAlive();
+            bool p4 = player4.GetComponent<P1>().checkIfAlive();
+            if (!p1 && !p2 && !p4)
             {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
@@ -369,12 +383,15 @@ public class World : MonoBehaviour {
         {
             // Player 4 attacking
             player1.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health1, -1);
+            decrementHealth(player1, health1, -1);
             player2.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health2, -1);
+            decrementHealth(player2, health2, -1);
             player3.GetComponent<P1>().UpdateDamage(1);
-            decrementHealth(health3, -1);
-            if (!player1.GetComponent<P1>().checkIfAlive() && !player2.GetComponent<P1>().checkIfAlive() && !player3.GetComponent<P1>().checkIfAlive())
+            decrementHealth(player3, health3, -1);
+            bool p1 = player1.GetComponent<P1>().checkIfAlive();
+            bool p2 = player2.GetComponent<P1>().checkIfAlive();
+            bool p3 = player3.GetComponent<P1>().checkIfAlive();
+            if (!p1 && !p2 && !p3)
             {
                 gameOver = true;
                 player4.GetComponent<P1>().winGame();
@@ -384,10 +401,15 @@ public class World : MonoBehaviour {
         }
     }
 
-    void decrementHealth(SpriteRenderer sr, int value)
+    void decrementHealth(GameObject p, SpriteRenderer sr, int value)
     {
-        float scale = 1 / (float)player1.GetComponent<P1>().maxDamage;
-        Vector3 before = sr.bounds.size;
-        sr.transform.localScale += new Vector3(0, -0.02f, 0);
+        if (p.GetComponent<P1>().isAlive)
+        {
+            float scale = 1 / (float)p.GetComponent<P1>().maxDamage;
+            Vector3 before = sr.bounds.size;
+            sr.transform.localScale += new Vector3(0, -0.02f, 0);
+
+        }
+        
     }
 }
