@@ -8,7 +8,9 @@ public class LoadOnClick : MonoBehaviour
 	public void LoadScene(int level)
     {
         //Application.LoadLevel(level);
+        Debug.Log(level);
         SceneManager.LoadScene(level);
+
     }
     
     void Update()

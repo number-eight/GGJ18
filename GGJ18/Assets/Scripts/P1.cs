@@ -67,18 +67,20 @@ public class P1 : MonoBehaviour {
         Vector2 s = this.GetComponent<SpriteRenderer>().bounds.size;
         if (s.x > s.y)
         {
-            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 50), (float)(s.y * 25));
+            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 25), (float)(s.y * 10));
 
         }
         else {
 
-            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 50), (float)(s.y * 75));
+            myText.rectTransform.sizeDelta = new Vector2((float)(s.x * 25), (float)(s.y * 40));
         }
+        myText.rectTransform.transform.localScale= (new Vector2(3, 3));
         
         myText.resizeTextForBestFit = true;
         myText.font = font;
         myText.text = message;
         myText.alignment = TextAnchor.MiddleCenter;
+
 
 
         Vector2 newPos;
