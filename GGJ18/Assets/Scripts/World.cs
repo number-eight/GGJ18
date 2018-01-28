@@ -25,6 +25,8 @@ public class World : MonoBehaviour {
     public int numPlayers;
     public Color occlusion;
 
+    public Button[] buttons;
+
     // Use this for initialization
     void Start () {
         // only allow the game to be played in portrait orientation
@@ -35,6 +37,12 @@ public class World : MonoBehaviour {
 
         // the translucent rectangle that serves as the player's health bar
         occlusion = new Color(1, 1, 1, 0.5f);
+
+        buttons = FindObjectsOfType<Button>();
+        foreach (Button b in buttons)
+        {
+            b.gameObject.SetActive(false);
+        }
 
         gameOver = false;
         if (this.tag == "4P")
@@ -234,6 +242,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sys1.Emit(5);
             Debug.Log("emit from P1");
@@ -249,6 +258,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sys2.Emit(5);
             Debug.Log("emit from P2");
@@ -271,6 +281,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm1.Emit(5);
             Debug.Log("emit from P_m1");
@@ -290,6 +301,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm2.Emit(5);
             Debug.Log("emit from P_m2");
@@ -307,6 +319,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm3.Emit(5);
             Debug.Log("emit from P_m3");
@@ -333,6 +346,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm1.Emit(5);
             Debug.Log("emit from P_m1");
@@ -355,6 +369,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player2.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm2.Emit(5);
             Debug.Log("emit from P_m2");
@@ -375,6 +390,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player3.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm3.Emit(5);
             Debug.Log("emit from P_m3");
@@ -395,6 +411,7 @@ public class World : MonoBehaviour {
             {
                 gameOver = true;
                 player4.GetComponent<P1>().winGame();
+                gameOverMenu();
             }
             sysm4.Emit(5);
             Debug.Log("emit from P_m4");
@@ -408,8 +425,14 @@ public class World : MonoBehaviour {
             float scale = 1 / (float)p.GetComponent<P1>().maxDamage;
             Vector3 before = sr.bounds.size;
             sr.transform.localScale += new Vector3(0, -0.02f, 0);
+        }  
+    }
 
+    void gameOverMenu()
+    {
+        foreach (Button b in buttons)
+        {
+            b.gameObject.SetActive(true);
         }
-        
     }
 }
