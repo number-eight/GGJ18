@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class P1 : MonoBehaviour {
 
     public int damage;
-    public int maxDamage = 10;
+    public int maxDamage = 50;
     public bool isAlive = true;
     public bool gameWon = false;
     //public GameObject particleSys;
