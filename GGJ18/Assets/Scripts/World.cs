@@ -43,7 +43,6 @@ public class World : MonoBehaviour {
             numPlayers = 2;
             start2P();
         }
-
     }
 
     void start2P()
@@ -77,6 +76,10 @@ public class World : MonoBehaviour {
 
         health1 = sr1[1];
         health2 = sr2[1];
+
+        // Initialize particle systems
+        sys1 = GameObject.FindGameObjectWithTag("Particle1").GetComponent<ParticleSystem>();
+        sys2 = GameObject.FindGameObjectWithTag("Particle2").GetComponent<ParticleSystem>();
     }
 
     void start3P()
@@ -177,12 +180,7 @@ public class World : MonoBehaviour {
         health1 = sr1[1];
         health2 = sr2[1];
         health3 = sr3[1];
-        health4 = sr4[1];
-
-        // Initialize particle systems
-        sys1 = GameObject.FindGameObjectWithTag("Particle1").GetComponent<ParticleSystem>();
-        Debug.Log("sys1 :" + sys1);
-        sys2 = GameObject.FindGameObjectWithTag("Particle2").GetComponent<ParticleSystem>();      
+        health4 = sr4[1];    
     }
 
     // Update is called once per frame
@@ -221,6 +219,8 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player1.GetComponent<P1>().winGame();
             }
+            sys1.Emit(5);
+            Debug.Log("emit from P1");
         }
 
         else if (position.y > 0.5 * Screen.height && player2.GetComponent<P1>().isAlive)
@@ -307,8 +307,6 @@ public class World : MonoBehaviour {
                 gameOver = true;
                 player4.GetComponent<P1>().winGame();
             }
-            sys1.Emit(5);
-            Debug.Log("emit from P1");
         }
 
     }
