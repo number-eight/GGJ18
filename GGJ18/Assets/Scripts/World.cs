@@ -326,7 +326,8 @@ public class World : MonoBehaviour {
 
     void decrementHealth(SpriteRenderer sr, int value)
     {
+        float scale = 1 / player4.GetComponent<P1>().maxDamage;
         Vector3 before = sr.bounds.size;
-        sr.transform.localScale += new Vector3(0,-0.01f,0);
+        sr.transform.localScale += new Vector3(0, -scale, 0);
     }
 }
